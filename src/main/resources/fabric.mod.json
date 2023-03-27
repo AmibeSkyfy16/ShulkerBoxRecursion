@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "shulkerbox_recursion",
+  "version": "${version}",
+  "name": "shulkerbox_recursion",
+  "description": "All shulkerbox the be placed inside another shulkerbox",
+  "authors": [
+    "Skyfy16"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/shulkerbox_recursion/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "ch.skyfy.shulkerboxrecursion.ShulkerBoxRecursionMod"
+      }
+    ]
+  },
+  "mixins": [
+    "shulkerbox_recursion.mixin.json"
+  ],
+  "depends": {
+    "java": ">=17",
+    "minecraft": "1.19.4",
+    "fabricloader": ">=0.14.17",
+    "fabric": "*",
+    "fabric-language-kotlin": ">=1.9.2+kotlin.1.8.10"
+  }
+}
