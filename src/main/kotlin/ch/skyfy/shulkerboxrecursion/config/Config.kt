@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Config(
-    @SerialComment("How many times a shulkerbox can be put inside another one")
+    @SerialComment("How many times a shulkerbox can be put inside another one (the maximum depth)")
     val maximumRecursion: Int = 2
 ) : Validatable

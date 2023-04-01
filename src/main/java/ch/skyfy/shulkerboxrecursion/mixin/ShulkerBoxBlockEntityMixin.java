@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ShulkerBoxBlockEntityMixin {
     @Inject(at = @At("HEAD"), method = "canInsert", cancellable = true)
     public void init(int slot, ItemStack stack, Direction dir, CallbackInfoReturnable<Boolean> cir) {
-        var result = CanInsertCallback.EVENT.invoker().canInsert((ShulkerBoxBlockEntity) (Object) this);
+        var result = CanInsertCallback.EVENT.invoker().canInsert(stack, (ShulkerBoxBlockEntity) (Object) this);
         if (result.getResult() == ActionResult.PASS) {
             cir.setReturnValue(result.getValue());
             cir.cancel();

@@ -1,8 +1,5 @@
 @file:Suppress("GradlePackageVersionRange")
 
-import org.apache.commons.io.FileUtils
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 val transitiveInclude: Configuration by configurations.creating
 
 plugins {
@@ -54,7 +51,6 @@ tasks {
     }
 
     loom {
-
         runs {
             this.getByName("client") {
                 runDir = "testclient"
@@ -119,7 +115,6 @@ tasks {
                 }
             }
         }
-
     }
 
     java {
@@ -142,7 +137,7 @@ tasks {
         distributionType = Wrapper.DistributionType.BIN
     }
 
-    named<KotlinCompile>("compileKotlin") {
+    named<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>("compileKotlin") {
         kotlinOptions.jvmTarget = javaVersion.toString()
     }
 

@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.event.Event
 import net.fabricmc.fabric.api.event.EventFactory
 import net.minecraft.block.entity.ShulkerBoxBlockEntity
 import net.minecraft.inventory.Inventory
+import net.minecraft.item.ItemStack
 import net.minecraft.util.ActionResult
 import net.minecraft.util.TypedActionResult
 
@@ -12,9 +13,9 @@ fun interface CanInsertCallback {
     companion object {
         @JvmField
         val EVENT: Event<CanInsertCallback> = EventFactory.createArrayBacked(CanInsertCallback::class.java){ listeners ->
-            CanInsertCallback { instance ->
+            CanInsertCallback { stack, instance ->
                 for(listener in listeners) {
-                    val result = listener.canInsert(instance)
+                    val result = listener.canInsert(stack, instance)
                     if(result.result != ActionResult.FAIL)
                         return@CanInsertCallback result
                 }
@@ -23,6 +24,6 @@ fun interface CanInsertCallback {
         }
     }
 
-    fun canInsert(instance: Inventory): TypedActionResult<Boolean>
+    fun canInsert(stack: ItemStack, instance: Inventory): TypedActionResult<Boolean>
 
 }

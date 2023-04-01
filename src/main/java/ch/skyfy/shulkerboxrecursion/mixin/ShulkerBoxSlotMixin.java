@@ -16,7 +16,7 @@ public abstract class ShulkerBoxSlotMixin {
     public void init(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         var instance = (ShulkerBoxSlot) (Object) this;
 
-        var result = CanInsertCallback.EVENT.invoker().canInsert(instance.inventory);
+        var result = CanInsertCallback.EVENT.invoker().canInsert(stack, instance.inventory);
         if (result.getResult() == ActionResult.PASS) {
             cir.setReturnValue(result.getValue());
             cir.cancel();

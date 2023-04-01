@@ -21,7 +21,7 @@ class ReloadFilesCmd : Command<ServerCommandSource> {
 
     companion object {
         fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
-            val cmd = literal("revival").requires { source -> source.hasPermissionLevel(4) }
+            val cmd = literal("shulkerbox-recursion").requires { source -> source.hasPermissionLevel(4) }
                 .then(
                     literal("reload").then(
                         argument("fileName", StringArgumentType.string()).suggests(Companion::getConfigFiles).executes(ReloadFilesCmd())

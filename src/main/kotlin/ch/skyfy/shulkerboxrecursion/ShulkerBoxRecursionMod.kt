@@ -4,10 +4,14 @@ import ch.skyfy.json5configlib.ConfigManager
 import ch.skyfy.shulkerboxrecursion.callback.CanInsertCallback
 import ch.skyfy.shulkerboxrecursion.command.ReloadFilesCmd
 import ch.skyfy.shulkerboxrecursion.config.Configs
-import ch.skyfy.shulkerboxrecursion.data.Node
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.block.ShulkerBoxBlock
+import net.minecraft.item.BlockItem
+import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NbtCompound
+import net.minecraft.nbt.NbtList
 import net.minecraft.util.TypedActionResult
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
@@ -21,8 +25,6 @@ class ShulkerBoxRecursionMod : ModInitializer {
         const val MOD_ID: String = "shulkerbox_recursion"
         val CONFIG_DIRECTORY: Path = FabricLoader.getInstance().configDir.resolve(MOD_ID)
         val LOGGER: Logger = LogManager.getLogger(ShulkerBoxRecursionMod::class.java)
-
-        val NODES = mutableListOf<Node>()
     }
 
     init {
@@ -37,28 +39,41 @@ class ShulkerBoxRecursionMod : ModInitializer {
     private fun registerCommands() = CommandRegistrationCallback.EVENT.register { dispatcher, _, _ -> ReloadFilesCmd.register(dispatcher) }
 
     private fun registerCallbacks() {
-        CanInsertCallback.EVENT.register { instance ->
+        CanInsertCallback.EVENT.register { stack, _ ->
+            val count = countShulker(stack)
+//            println("count: $count")
 
-//            val n = findChild(instance.hashCode().toString(), NODES)
-//            if (n != null) {
-//                println("not null")
-//            } else {
-//
-//            }
+            if (count > Configs.CONFIG.serializableData.maximumRecursion) {
+                return@register TypedActionResult.pass(false)
+            } else {
+                return@register TypedActionResult.pass(true)
+            }
 
-            TypedActionResult.pass(true)
         }
     }
 
-    private fun findChild(id: String, list: MutableList<Node>, count: Int = 0): Node? {
-        val n = list.firstOrNull { it.id == id }
-        if (n != null) return n
-        else {
-            list.forEach {
-                return findChild(it.id, it.childs)
+    private fun countShulker(stack: ItemStack, count: Int = 0): Int {
+        var counter = count
+        if (stack.item is BlockItem && (stack.item as BlockItem).block is ShulkerBoxBlock) {
+            counter++
+            val content = mutableListOf<ItemStack>()
+            val blockEntityTag = stack.getSubNbt("BlockEntityTag")
+            if (blockEntityTag != null) {
+                (blockEntityTag.get("Items") as NbtList).forEach { nbtElement ->
+                    if (nbtElement is NbtCompound) {
+                        val stack2 = ItemStack.fromNbt(nbtElement)
+                        content.add(stack2)
+                    }
+                }
+            }
+
+            content.forEach {
+                if (it.item is BlockItem && (it.item as BlockItem).block is ShulkerBoxBlock) {
+                    return countShulker(it, counter)
+                }
             }
         }
-        return null
+        return counter
     }
 
 }
