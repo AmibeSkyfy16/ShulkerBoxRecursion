@@ -1,3 +1,5 @@
 # Project exclude paths
 /.gradle/
 /build/
+/preconfiguration/doneclient.txt
+/preconfiguration/doneserver.txt
