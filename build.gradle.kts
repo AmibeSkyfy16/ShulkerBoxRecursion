@@ -170,7 +170,7 @@ tasks {
 
 }
 
-fun copyFile(src: String, dest: String) = copy { from(src);into(dest) }
+fun copyFile(src: String, dest: String) = copy { from(src); into(dest) }
 
 fun DependencyHandlerScope.includeTransitive(
     root: ResolvedDependency?,
