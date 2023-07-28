@@ -3,3 +3,5 @@
 /build/
 /preconfiguration/doneclient.txt
 /preconfiguration/doneserver.txt
+/testclient/
+/testserver/
