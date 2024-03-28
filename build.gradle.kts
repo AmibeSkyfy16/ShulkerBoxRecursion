@@ -3,9 +3,9 @@
 val transitiveInclude: Configuration by configurations.creating
 
 plugins {
-    id("fabric-loom") version "1.3-SNAPSHOT"
-    id("org.jetbrains.kotlin.jvm") version "1.8.22"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.22"
+    id("fabric-loom") version "1.5-SNAPSHOT"
+    id("org.jetbrains.kotlin.jvm") version "1.9.23"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.23"
     idea
 }
 
@@ -32,12 +32,12 @@ dependencies {
 //    modImplementation("net.silkmc:silk-compose:1.0.4")
 
 
-    transitiveInclude(implementation("ch.skyfy.json5configlib:json5-config-lib:1.0.22")!!)
+    transitiveInclude(implementation("ch.skyfy.json5configlib:json5-config-lib:1.0.25")!!)
 //    transitiveInclude(implementation("com.github.goxr3plus:FX-BorderlessScene:4.4.0")!!)
 
     handleIncludes(project, transitiveInclude)
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.22")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.9.23")
 }
 
 tasks {
@@ -127,7 +127,7 @@ tasks {
     }
 
     named<Wrapper>("wrapper") {
-        gradleVersion = "8.1"
+        gradleVersion = "8.7"
         distributionType = Wrapper.DistributionType.BIN
     }
 
